@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time Temperature Monitoring</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establish WebSocket connection with the server
+            const socket = io.connect();
+
+            // Event handler for receiving temperature data
+            socket.on('temperature_data', function(data) {
+                // Update the UI with the received temperature data
+                const temperatureElement = document.getElementById('temperature-data');
+                const timestamp = new Date(data.timestamp).toLocaleString();
+                const temperature = data.temperature;
+                const location = data.location;
+                temperatureElement.innerHTML = `Timestamp: ${timestamp}<br>Temperature: ${temperature}°C<br>Location: ${location}`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Real-time Temperature Monitoring</h1>
+    <div id="temperature-data"></div>
+</body>
+</html>

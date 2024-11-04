@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time Temperature Monitoring</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Server ile WebSocket bağlantısını kurmak için tam URL'yi kullan
+            const socket = io.connect('https://psychic-space-sniffle-p6v4r75g5g5f94j5-5000.app.github.dev');
+
+            // Sıcaklık verilerini almak için event handler
+            socket.on('temperature_data', function(data) {
+                // Alınan sıcaklık verisiyle UI güncelle
+                const temperatureElement = document.getElementById('temperature-data');
+                const timestamp = new Date(data.timestamp).toLocaleString();
+                const temperature = data.temperature;
+                const location = data.location;
+                temperatureElement.innerHTML = `Timestamp: ${timestamp}<br>Temperature: ${temperature}°C<br>Location: ${location}`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Real-time Temperature Monitoring</h1>
+    <div id="temperature-data"></div>
+</body>
+</html>
